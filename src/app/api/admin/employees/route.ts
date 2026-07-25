@@ -45,13 +45,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Kolom NIK, Nama, Email, Password, Tanggal Masuk, Jenis Kelamin, Status, dan Jabatan wajib diisi' }, { status: 400 });
     }
 
+    // Check duplicate NIK
+    const existingNik = await db.employee.findUnique({
+      where: { nik: nik.trim() },
+    });
+    if (existingNik) {
+      return NextResponse.json({ error: `NIK "${nik.trim()}" sudah digunakan oleh karyawan ${existingNik.name}. NIK harus bersifat unik!` }, { status: 400 });
+    }
+
+    // Check duplicate Email
+    const existingEmail = await db.employee.findUnique({
+      where: { email: email.trim().toLowerCase() },
+    });
+    if (existingEmail) {
+      return NextResponse.json({ error: `Email "${email.trim()}" sudah terdaftar pada karyawan ${existingEmail.name}!` }, { status: 400 });
+    }
+
     const passwordHash = await bcrypt.hash(password, 10);
 
     const employee = await db.employee.create({
       data: {
-        nik,
-        name,
-        email: email.toLowerCase(),
+        nik: nik.trim(),
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
         passwordHash,
         role: role || 'employee',
         bankAccount: bankAccount || '-',
@@ -96,10 +112,32 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: 'Semua kolom wajib diisi' }, { status: 400 });
     }
 
+    // Check duplicate NIK (excluding current employee ID)
+    const existingNik = await db.employee.findFirst({
+      where: {
+        nik: nik.trim(),
+        NOT: { id },
+      },
+    });
+    if (existingNik) {
+      return NextResponse.json({ error: `NIK "${nik.trim()}" sudah digunakan oleh karyawan lain (${existingNik.name}). NIK harus bersifat unik!` }, { status: 400 });
+    }
+
+    // Check duplicate Email (excluding current employee ID)
+    const existingEmail = await db.employee.findFirst({
+      where: {
+        email: email.trim().toLowerCase(),
+        NOT: { id },
+      },
+    });
+    if (existingEmail) {
+      return NextResponse.json({ error: `Email "${email.trim()}" sudah terdaftar pada karyawan lain (${existingEmail.name})!` }, { status: 400 });
+    }
+
     const dataToUpdate: any = {
-      nik,
-      name,
-      email: email.toLowerCase(),
+      nik: nik.trim(),
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
       role: role || 'employee',
       bankAccount: bankAccount || '-',
       photo: photo || null,
