@@ -503,9 +503,9 @@ export default function AdminEmployeesPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Nomor Induk Karyawan (NIK)
                   </label>
                   <input
@@ -514,12 +514,12 @@ export default function AdminEmployeesPage() {
                     value={nik}
                     onChange={(e) => setNik(e.target.value)}
                     placeholder="Contoh: 100002"
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50 font-mono"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50 font-mono"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Nama Karyawan
                   </label>
                   <input
@@ -528,18 +528,18 @@ export default function AdminEmployeesPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Contoh: Joko Widodo"
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Email Perusahaan
                   </label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
+                    <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
                       <Mail className="w-3.5 h-3.5" />
                     </span>
                     <input
@@ -548,13 +548,13 @@ export default function AdminEmployeesPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="joko@perusahaan.com"
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                      className="w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Password {modalType === 'edit' && '(Kosongkan jika tidak diubah)'}
                   </label>
                   <input
@@ -563,20 +563,20 @@ export default function AdminEmployeesPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Jabatan (Master Data)
                   </label>
                   <select
                     value={positionId}
                     onChange={(e) => setPositionId(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                   >
                     {positions.map((pos) => (
                       <option key={pos.id} value={pos.id}>
@@ -587,11 +587,11 @@ export default function AdminEmployeesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Tanggal Masuk Kerja
                   </label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
+                    <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
                       <Calendar className="w-3.5 h-3.5" />
                     </span>
                     <input
@@ -599,21 +599,21 @@ export default function AdminEmployeesPage() {
                       required
                       value={entryDate}
                       onChange={(e) => setEntryDate(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                      className="w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Jenis Kelamin
                   </label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                   >
                     <option value="Laki-laki">Laki-laki</option>
                     <option value="Perempuan">Perempuan</option>
@@ -621,13 +621,13 @@ export default function AdminEmployeesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Status Kepegawaian
                   </label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                   >
                     <option value="Tetap">Karyawan Tetap</option>
                     <option value="Kontrak">Karyawan Kontrak</option>
@@ -636,13 +636,13 @@ export default function AdminEmployeesPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Rekening Bank Karyawan
                   </label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 pointer-events-none">
+                    <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
                       <CreditCard className="w-3.5 h-3.5" />
                     </span>
                     <input
@@ -650,19 +650,19 @@ export default function AdminEmployeesPage() {
                       value={bankAccount}
                       onChange={(e) => setBankAccount(e.target.value)}
                       placeholder="Contoh: BCA - 987654"
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                      className="w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Hak Akses System
                   </label>
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                   >
                     <option value="employee">Karyawan (Akses Portal Biasa)</option>
                     <option value="owner">Owner / Super Admin (Akses Sidebar Lengkap)</option>
