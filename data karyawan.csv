@@ -1,0 +1,101 @@
+nik,nama_lengkap,email,password,role,jabatan,departemen,gaji_pokok,tunjangan_jabatan,rekening_bank,tanggal_masuk,jenis_kelamin,status_kerja
+EXE-001,Owner Budi,owner@perusahaan.com,Owner#EXE-001,owner,Owner / Direktur,Executive,15000000,5000000,BCA - 1234567890,2020-01-01,Laki-laki,Tetap
+PRD-001,Rizky Pratama,rizky.pratama@perusahaan.com,Rizky#PRD-001,employee,Manajer Produksi Pabrik,Produksi Barang,12000000,3000000,BCA - 2233445566,2021-05-20,Laki-laki,Tetap
+PRD-002,Nadiem Makarim,nadiem.m@perusahaan.com,Nadiem#PRD-002,employee,Manajer Produksi Pabrik,Produksi Barang,12000000,3000000,CIMB - 5050505050,2021-04-15,Laki-laki,Tetap
+PRD-003,Ahmad Fauzi,ahmad.fauzi@perusahaan.com,Ahmad#PRD-003,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,Mandiri - 4455667788,2022-01-15,Laki-laki,Tetap
+PRD-004,Mahfud MD,mahfud.md@perusahaan.com,Mahfud#PRD-004,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,BRI - 8080808080,2021-12-01,Laki-laki,Tetap
+PRD-005,Ahmad Sahroni,ahmad.sahroni@perusahaan.com,Ahmad#PRD-005,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,CIMB - 6789678967,2022-04-01,Laki-laki,Tetap
+PRD-006,Ahmad Dhani,ahmad.dhani@perusahaan.com,Ahmad#PRD-006,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,Mandiri - 9090101020,2022-02-10,Laki-laki,Tetap
+PRD-007,Hendra Kurniawan,hendra.kurniawan@perusahaan.com,Hendra#PRD-007,employee,Teknisi Moulding & Casting,Produksi Barang,6500000,1000000,CIMB - 6677889900,2022-06-01,Laki-laki,Tetap
+PRD-008,Anies Baswedan,anies.baswedan@perusahaan.com,Anies#PRD-008,employee,Teknisi Moulding & Casting,Produksi Barang,6500000,1000000,BNI - 1111222233,2022-08-01,Laki-laki,Tetap
+PRD-009,Charles Honoris,charles.h@perusahaan.com,Charles#PRD-009,employee,Teknisi Moulding & Casting,Produksi Barang,6500000,1000000,BCA - 4567456745,2022-09-15,Laki-laki,Tetap
+PRD-010,Once Mekel,once.mekel@perusahaan.com,Once#PRD-010,employee,Teknisi Moulding & Casting,Produksi Barang,6500000,1000000,BNI - 1122331122,2022-05-01,Laki-laki,Tetap
+PRD-011,Adi Nugroho,adi.nugroho@perusahaan.com,Adi#PRD-011,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BCA - 8899001122,2022-09-01,Laki-laki,Tetap
+PRD-012,Ganjar Pranowo,ganjar.pranowo@perusahaan.com,Ganjar#PRD-012,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,Mandiri - 2222333344,2022-10-10,Laki-laki,Tetap
+PRD-013,Edhie Baskoro,ibas.yudhoyono@perusahaan.com,Edhie#PRD-013,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BNI - 2345678901,2022-10-01,Laki-laki,Tetap
+PRD-014,Tommy Kurniawan,tommy.k@perusahaan.com,Tommy#PRD-014,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BCA - 1010202030,2023-02-15,Laki-laki,Tetap
+PRD-015,Karyawan Joko,joko@perusahaan.com,Karyawan#PRD-015,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,Mandiri - 9876543210,2022-03-15,Laki-laki,Tetap
+PRD-016,Agus Harimurti,agus.yudhoyono@perusahaan.com,Agus#PRD-016,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BCA - 6666777788,2023-01-01,Laki-laki,Tetap
+PRD-017,Basuki Tjahaja,ahok.btp@perusahaan.com,Basuki#PRD-017,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,Mandiri - 2323232323,2022-02-01,Laki-laki,Tetap
+PRD-018,Bambang Soesatyo,bamsoet@perusahaan.com,Bambang#PRD-018,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BCA - 7878787878,2022-06-15,Laki-laki,Tetap
+PRD-019,Saan Mustopa,saan.mustopa@perusahaan.com,Saan#PRD-019,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BNI - 3456345634,2023-05-10,Laki-laki,Tetap
+PRD-020,Habiburokhman,habiburokhman@perusahaan.com,Habiburokhman#PRD-020,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BRI - 0123012301,2023-01-10,Laki-laki,Tetap
+PRD-021,Bobby Adhityo,bobby.adhityo@perusahaan.com,Bobby#PRD-021,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BNI - 7890123456,2023-02-01,Laki-laki,Tetap
+PRD-022,Yandri Susanto,yandri.s@perusahaan.com,Yandri#PRD-022,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,Mandiri - 3344334433,2023-01-05,Laki-laki,Tetap
+PRD-023,Verrell Bramasta,verrell.b@perusahaan.com,Verrell#PRD-023,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BNI - 9900990099,2023-08-20,Laki-laki,Kontrak
+PRD-024,Marcel Siahaan,marcel.s@perusahaan.com,Marcel#PRD-024,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 3344553344,2023-01-15,Laki-laki,Tetap
+PRD-025,Bambang Trihatmodjo,bambang.tri@perusahaan.com,Bambang#PRD-025,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BNI - 7897897897,2023-09-20,Laki-laki,Kontrak
+PRD-026,Agung Hercules,agung.hercules@perusahaan.com,Agung#PRD-026,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BNI - 6677889955,2023-06-01,Laki-laki,Kontrak
+PRD-027,Muhaimin Iskandar,muhaimin.i@perusahaan.com,Muhaimin#PRD-027,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BNI - 8888999900,2023-04-15,Laki-laki,Tetap
+PRD-028,Sufmi Dasco,dasco.sufmi@perusahaan.com,Sufmi#PRD-028,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,CIMB - 8989898989,2023-03-01,Laki-laki,Tetap
+PRD-029,Herman Khaeron,herman.k@perusahaan.com,Herman#PRD-029,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 3456789012,2023-08-01,Laki-laki,Kontrak
+PRD-030,Eko Patrio,eko.patrio@perusahaan.com,Eko#PRD-030,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 6677667766,2023-05-20,Laki-laki,Tetap
+PRD-031,Sigit Purnomo,sigit.p@perusahaan.com,Sigit#PRD-031,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,Mandiri - 4455664455,2023-03-20,Laki-laki,Kontrak
+QCA-001,Eka Putri,eka.putri@perusahaan.com,Eka#QCA-001,employee,Manajer Quality Control,Quality Control (QC),11000000,2200000,BRI - 7788990011,2021-11-15,Perempuan,Tetap
+QCA-002,Luhut Binsar,luhut.b@perusahaan.com,Luhut#QCA-002,employee,Manajer Quality Control,Quality Control (QC),11000000,2200000,Mandiri - 7070707070,2020-05-01,Laki-laki,Tetap
+QCA-003,Farhan,farhan@perusahaan.com,Farhan#QCA-003,employee,Supervisor QC,Quality Control (QC),8500000,1500000,Mandiri - 8899008899,2022-01-10,Laki-laki,Tetap
+QCA-004,Karyawan Ani,ani@perusahaan.com,Karyawan#QCA-004,employee,Inspector Quality Assurance,Quality Control (QC),5800000,950000,BRI - 1122334455,2023-01-10,Perempuan,Kontrak
+QCA-005,Khofifah Indar,khofifah.i@perusahaan.com,Khofifah#QCA-005,employee,Inspector Quality Assurance,Quality Control (QC),5800000,950000,BRI - 5555666677,2023-02-15,Perempuan,Tetap
+QCA-006,Djarot Saiful,djarot.saiful@perusahaan.com,Djarot#QCA-006,employee,Inspector Quality Assurance,Quality Control (QC),5800000,950000,BNI - 3434343434,2023-07-01,Laki-laki,Tetap
+QCA-007,Hetifah Sjaifudian,hetifah.s@perusahaan.com,Hetifah#QCA-007,employee,Inspector Quality Assurance,Quality Control (QC),5800000,950000,Mandiri - 7890789078,2023-06-01,Perempuan,Tetap
+QCA-008,Nurul Arifin,nurul.arifin@perusahaan.com,Nurul#QCA-008,employee,Inspector Quality Assurance,Quality Control (QC),5800000,950000,Mandiri - 5678901234,2023-04-10,Perempuan,Tetap
+QCA-009,Nurhayati Ali,nurhayati.ali@perusahaan.com,Nurhayati#QCA-009,employee,Laboran Pengujian Mutu,Quality Control (QC),5500000,900000,BCA - 1122112211,2023-08-01,Perempuan,Tetap
+QCA-010,Arzeti Bilbina,arzeti.b@perusahaan.com,Arzeti#QCA-010,employee,Laboran Pengujian Mutu,Quality Control (QC),5500000,900000,BRI - 2020303040,2023-04-01,Perempuan,Tetap
+QCA-011,Ramzi,ramzi@perusahaan.com,Ramzi#QCA-011,employee,Laboran Pengujian Mutu,Quality Control (QC),5500000,900000,BCA - 9900119900,2023-02-01,Laki-laki,Tetap
+LOG-001,Siti Nurhaliza,siti.nurhaliza@perusahaan.com,Siti#LOG-001,employee,Manajer Gudang & Logistik,Logistik & Gudang,10500000,2000000,BNI - 3344556677,2021-08-01,Perempuan,Tetap
+LOG-002,Sri Mulyani,sri.mulyani@perusahaan.com,Sri#LOG-002,employee,Manajer Gudang & Logistik,Logistik & Gudang,10500000,2000000,BCA - 1010101010,2021-01-15,Perempuan,Tetap
+LOG-003,Nagita Slavina,nagita.s@perusahaan.com,Nagita#LOG-003,employee,Supervisor Logistik,Logistik & Gudang,8000000,1400000,BCA - 6786786786,2021-11-01,Perempuan,Tetap
+LOG-004,Fitri Carlina,fitri.carlina@perusahaan.com,Fitri#LOG-004,employee,Staff Pergudangan & Barang Jadi,Logistik & Gudang,5200000,850000,BCA - 5566778844,2023-03-01,Perempuan,Tetap
+LOG-005,Puan Maharani,puan.maharani@perusahaan.com,Puan#LOG-005,employee,Staff Pergudangan & Barang Jadi,Logistik & Gudang,5200000,850000,Mandiri - 7777888899,2023-03-10,Perempuan,Tetap
+LOG-006,Fauzi Bowo,fauzi.bowo@perusahaan.com,Fauzi#LOG-006,employee,Staff Pergudangan & Barang Jadi,Logistik & Gudang,5200000,850000,Mandiri - 5656565656,2023-01-20,Laki-laki,Tetap
+LOG-007,Lestari Moerdijat,lestari.m@perusahaan.com,Lestari#LOG-007,employee,Staff Pergudangan & Barang Jadi,Logistik & Gudang,5200000,850000,BCA - 2345234523,2023-07-15,Perempuan,Tetap
+LOG-008,Puteri Komarudin,puteri.k@perusahaan.com,Puteri#LOG-008,employee,Operator Forklift & Material,Logistik & Gudang,5000000,800000,BCA - 8901234567,2023-05-15,Perempuan,Tetap
+LOG-009,Rachel Maryam,rachel.m@perusahaan.com,Rachel#LOG-009,employee,Operator Forklift & Material,Logistik & Gudang,5000000,800000,Mandiri - 3030404050,2023-05-10,Perempuan,Tetap
+LOG-010,Sultan Djorghi,sultan.d@perusahaan.com,Sultan#LOG-010,employee,Operator Forklift & Material,Logistik & Gudang,5000000,800000,BRI - 1231231231,2023-04-01,Laki-laki,Tetap
+MNT-001,Maya Indah,maya.indah@perusahaan.com,Maya#MNT-001,employee,Manajer Maintenance Teknik,Maintenance & Utility,11500000,2500000,BCA - 5566778899,2022-04-10,Perempuan,Tetap
+MNT-002,Gibran Rakabuming,gibran.r@perusahaan.com,Gibran#MNT-002,employee,Manajer Maintenance Teknik,Maintenance & Utility,11500000,2500000,BCA - 3030303030,2022-02-10,Laki-laki,Tetap
+MNT-003,Rina Melati,rina.melati@perusahaan.com,Rina#MNT-003,employee,Teknisi Otomasi & Listrik Pabrik,Maintenance & Utility,8500000,1500000,Mandiri - 9900112233,2023-02-01,Perempuan,Tetap
+MNT-004,Ridwan Kamil,ridwan.kamil@perusahaan.com,Ridwan#MNT-004,employee,Teknisi Otomasi & Listrik Pabrik,Maintenance & Utility,8500000,1500000,BCA - 9090909090,2022-05-15,Laki-laki,Tetap
+MNT-005,Adies Kadir,adies.kadir@perusahaan.com,Adies#MNT-005,employee,Teknisi Mekanik Mesin,Maintenance & Utility,6000000,1000000,BCA - 9012901290,2023-02-20,Laki-laki,Tetap
+MNT-006,Meutya Hafid,meutya.hafid@perusahaan.com,Meutya#MNT-006,employee,Teknisi Mekanik Mesin,Maintenance & Utility,6000000,1000000,BCA - 4567890123,2023-01-25,Perempuan,Tetap
+MNT-007,Primus Yustisio,primus.y@perusahaan.com,Primus#MNT-007,employee,Teknisi Mekanik Mesin,Maintenance & Utility,6000000,1000000,CIMB - 5566556655,2023-04-15,Laki-laki,Tetap
+MNT-008,Melly Goeslaw,melly.g@perusahaan.com,Melly#MNT-008,employee,Teknisi Mekanik Mesin,Maintenance & Utility,6000000,1000000,BCA - 2233442233,2022-08-15,Perempuan,Tetap
+HSE-001,Dian Sastrowardoyo,dian.sastro@perusahaan.com,Dian#HSE-001,employee,Supervisor K3 & Lingkungan,HSE & Keselamatan Kerja,8500000,1500000,BCA - 1122334400,2022-07-15,Perempuan,Tetap
+HSE-002,Kaesang Pangarep,kaesang.p@perusahaan.com,Kaesang#HSE-002,employee,Supervisor K3 & Lingkungan,HSE & Keselamatan Kerja,8500000,1500000,BNI - 4040404040,2022-03-01,Laki-laki,Tetap
+HSE-003,Krisdayanti,krisdayanti@perusahaan.com,Krisdayanti#HSE-003,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,BNI - 5050606070,2022-03-15,Perempuan,Tetap
+HSE-004,Bayu Skak,bayu.skak@perusahaan.com,Bayu#HSE-004,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,CIMB - 4455667733,2023-05-15,Laki-laki,Kontrak
+HSE-005,Sandiaga Uno,sandiaga.uno@perusahaan.com,Sandiaga#HSE-005,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,CIMB - 4444555566,2022-11-01,Laki-laki,Tetap
+HSE-006,Ahmad Muzani,ahmad.muzani@perusahaan.com,Ahmad#HSE-006,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,BNI - 9090121234,2023-04-10,Laki-laki,Tetap
+HSE-007,Dede Yusuf,dede.yusuf@perusahaan.com,Dede#HSE-007,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,Mandiri - 8901890189,2023-03-15,Laki-laki,Tetap
+HSE-008,Desy Ratnasari,desy.ratnasari@perusahaan.com,Desy#HSE-008,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,BCA - 4455445544,2023-03-01,Perempuan,Tetap
+HSE-009,Mulan Jameela,mulan.jameela@perusahaan.com,Mulan#HSE-009,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,BRI - 6060707080,2023-06-15,Perempuan,Kontrak
+HSE-010,Vicky Prasetyo,vicky.p@perusahaan.com,Vicky#HSE-010,employee,Officer K3 Keselamatan Kerja,HSE & Keselamatan Kerja,6000000,1000000,BNI - 3453453453,2023-08-01,Laki-laki,Kontrak
+PRD-032,Bambang Pamungkas,bambang.pamungkas@perusahaan.com,Bambang#PRD-032,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,BNI - 0011223344,2022-05-10,Laki-laki,Tetap
+PRD-033,Erick Thohir,erick.t@perusahaan.com,Erick#PRD-033,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,BCA - 6060606060,2021-09-01,Laki-laki,Tetap
+PRD-034,Pasha Ungu,pasha.ungu@perusahaan.com,Pasha#PRD-034,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,CIMB - 7070808090,2022-07-01,Laki-laki,Tetap
+PRD-035,Raffi Ahmad,raffi.ahmad@perusahaan.com,Raffi#PRD-035,employee,Supervisor Produksi,Produksi Barang,9500000,1800000,BCA - 5675675675,2021-10-01,Laki-laki,Tetap
+PRD-036,Irfan Bachdim,irfan.bachdim@perusahaan.com,Irfan#PRD-036,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BRI - 2233445511,2023-04-01,Laki-laki,Kontrak
+PRD-037,Prabowo Subianto,prabowo.s@perusahaan.com,Prabowo#PRD-037,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BCA - 3333444455,2021-07-01,Laki-laki,Tetap
+PRD-038,Said Abdullah,said.abdullah@perusahaan.com,Said#PRD-038,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,Mandiri - 1234123412,2022-11-15,Laki-laki,Tetap
+PRD-039,Dyah Roro,dyah.roro@perusahaan.com,Dyah#PRD-039,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,Mandiri - 9012345678,2023-06-20,Perempuan,Tetap
+PRD-040,Uya Kuya,uya.kuya@perusahaan.com,Uya#PRD-040,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BCA - 7788778877,2023-06-01,Laki-laki,Kontrak
+PRD-041,Giring Ganesha,giring.g@perusahaan.com,Giring#PRD-041,employee,Operator Mesin Produksi,Produksi Barang,5500000,900000,BCA - 8080909010,2023-07-20,Laki-laki,Kontrak
+PRD-042,Megawati Sukarno,megawati.s@perusahaan.com,Megawati#PRD-042,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,Mandiri - 3344556622,2021-03-01,Perempuan,Tetap
+PRD-043,Tri Rismaharini,tri.risma@perusahaan.com,Tri#PRD-043,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,Mandiri - 2020202020,2021-06-01,Perempuan,Tetap
+PRD-044,Rano Karno,rano.karno@perusahaan.com,Rano#PRD-044,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BCA - 4040505060,2022-01-20,Laki-laki,Tetap
+PRD-045,Hengky Kurniawan,hengky.k@perusahaan.com,Hengky#PRD-045,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BNI - 7788997788,2022-04-15,Laki-laki,Tetap
+PRD-046,Gita Gutawa,gita.gutawa@perusahaan.com,Gita#PRD-046,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 7788990066,2023-07-10,Perempuan,Kontrak
+PRD-047,Zulkifli Hasan,zulkifli.h@perusahaan.com,Zulkifli#PRD-047,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 9999000011,2023-05-01,Laki-laki,Kontrak
+PRD-048,Sutiyoso,sutiyoso@perusahaan.com,Sutiyoso#PRD-048,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BCA - 4545454545,2022-12-01,Laki-laki,Tetap
+PRD-049,Cucun Ahmad,cucun.ahmad@perusahaan.com,Cucun#PRD-049,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 5678567856,2023-09-01,Laki-laki,Kontrak
+PRD-050,Dave Laksono,dave.laksono@perusahaan.com,Dave#PRD-050,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,CIMB - 6789012345,2023-09-10,Laki-laki,Kontrak
+PRD-051,Netty Prasetiyani,netty.p@perusahaan.com,Netty#PRD-051,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BNI - 2233223322,2023-09-15,Perempuan,Kontrak
+PRD-052,Chicha Koeswoyo,chicha.k@perusahaan.com,Chicha#PRD-052,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BCA - 5566775566,2023-05-01,Perempuan,Kontrak
+PRD-053,Narji,narji@perusahaan.com,Narji#PRD-053,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BCA - 2342342342,2023-07-01,Laki-laki,Kontrak
+PRD-054,Doni Monardo,doni.monardo@perusahaan.com,Doni#PRD-054,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,Mandiri - 8899001177,2023-08-01,Laki-laki,Kontrak
+PRD-055,Yusril Ihza,yusril.ihza@perusahaan.com,Yusril#PRD-055,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BCA - 1212121212,2023-06-10,Laki-laki,Tetap
+PRD-056,Triyono,triyono@perusahaan.com,Triyono#PRD-056,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 6767676767,2023-08-15,Laki-laki,Kontrak
+PRD-057,Ace Hasan,ace.hasan@perusahaan.com,Ace#PRD-057,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,BRI - 0123456789,2023-07-01,Laki-laki,Tetap
+PRD-058,Denny Cagur,denny.cagur@perusahaan.com,Denny#PRD-058,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,Mandiri - 8899889988,2023-07-10,Laki-laki,Kontrak
+PRD-059,Lucky Hakim,lucky.hakim@perusahaan.com,Lucky#PRD-059,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,CIMB - 6677886677,2023-06-10,Laki-laki,Kontrak
+PRD-060,Aldi Taher,aldi.taher@perusahaan.com,Aldi#PRD-060,employee,Operator Assembly & Lini Produksi,Produksi Barang,5000000,750000,Mandiri - 4564564564,2023-08-15,Laki-laki,Kontrak

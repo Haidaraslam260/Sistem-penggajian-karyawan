@@ -1,0 +1,185 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  owner
+  employee
+}
+
+enum AttendanceStatus {
+  hadir
+  terlambat
+  sakit
+  cuti
+  alpa
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+}
+
+model Position {
+  id                String     @id @default(uuid())
+  name              String     @unique
+  department        String
+  basicSalary       Float      @map("basic_salary")
+  positionAllowance Float      @map("position_allowance")
+  employees         Employee[]
+
+  createdAt         DateTime   @default(now()) @map("created_at")
+  updatedAt         DateTime   @updatedAt @map("updated_at")
+
+  @@map("positions")
+}
+
+model Employee {
+  id            String       @id @default(uuid())
+  nik           String       @unique
+  name          String
+  email         String       @unique
+  passwordHash  String       @map("password_hash")
+  role          Role         @default(employee)
+  bankAccount   String       @map("bank_account")
+  photo         String?      @db.Text
+  entryDate     DateTime     @map("entry_date")
+  gender        String       // "Laki-laki" | "Perempuan"
+  status        String       // "Tetap" | "Kontrak"
+  ptkpStatus    String       @default("TK/0") @map("ptkp_status") // "TK/0" | "TK/1" | "TK/2" | "TK/3" | "K/0" | "K/1" | "K/2" | "K/3"
+  
+  positionId    String       @map("position_id")
+  position      Position     @relation(fields: [positionId], references: [id])
+  
+  attendances   Attendance[]
+  payslips      Payslip[]
+  deductions    Deduction[]
+  leaveRequests LeaveRequest[]
+  overtimes     Overtime[]
+
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  @@map("employees")
+}
+
+model Deduction {
+  id              String   @id @default(uuid())
+  employeeId      String   @map("employee_id")
+  employee        Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  period          String   // "YYYY-MM"
+  lateDeduction   Float    @default(0) @map("late_deduction")
+  absentDeduction Float    @default(0) @map("absent_deduction")
+  otherDeduction  Float    @default(0) @map("other_deduction")
+  description     String?
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@unique([employeeId, period])
+  @@map("deductions")
+}
+
+model Attendance {
+  id           String           @id @default(uuid())
+  employeeId   String           @map("employee_id")
+  employee     Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date         DateTime         @db.Date
+  clockIn      DateTime?        @map("clock_in")
+  clockOut     DateTime?        @map("clock_out")
+  latitudeIn   Float?           @map("latitude_in")
+  longitudeIn  Float?           @map("longitude_in")
+  latitudeOut  Float?           @map("latitude_out")
+  longitudeOut Float?           @map("longitude_out")
+  status       AttendanceStatus @default(hadir)
+  photoIn      String?          @map("photo_in") @db.Text
+  photoOut     String?          @map("photo_out") @db.Text
+
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+
+  @@unique([employeeId, date])
+  @@map("attendance")
+}
+
+model Payslip {
+  id                  String        @id @default(uuid())
+  employeeId          String        @map("employee_id")
+  employee            Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  period              String        // Formatted as "YYYY-MM" (e.g. "2026-07")
+  basicSalary         Float         @map("basic_salary")
+  totalAllowances     Float         @map("total_allowances")
+  overtimePay         Float         @default(0) @map("overtime_pay")
+  bpjsKetenagakerjaan Float         @default(0) @map("bpjs_ketenagakerjaan")
+  bpjsKesehatan       Float         @default(0) @map("bpjs_kesehatan")
+  pph21               Float         @default(0) @map("pph_21")
+  totalDeductions     Float         @map("total_deductions")
+  netSalary           Float         @map("net_salary")
+  paymentStatus       PaymentStatus @default(pending) @map("payment_status")
+
+  createdAt           DateTime      @default(now()) @map("created_at")
+  updatedAt           DateTime      @updatedAt @map("updated_at")
+
+  @@unique([employeeId, period])
+  @@map("payslips")
+}
+
+enum LeaveType {
+  cuti
+  sakit
+  izin
+}
+
+enum LeaveStatus {
+  pending
+  approved
+  rejected
+}
+
+enum OvertimeStatus {
+  pending
+  approved
+  rejected
+}
+
+model LeaveRequest {
+  id          String      @id @default(uuid())
+  employeeId  String      @map("employee_id")
+  employee    Employee    @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  type        LeaveType
+  startDate   DateTime    @map("start_date") @db.Date
+  endDate     DateTime    @map("end_date") @db.Date
+  reason      String      @db.Text
+  attachment  String?     @db.Text
+  status      LeaveStatus @default(pending)
+  approvedBy  String?     @map("approved_by")
+
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  @@map("leave_requests")
+}
+
+model Overtime {
+  id          String         @id @default(uuid())
+  employeeId  String         @map("employee_id")
+  employee    Employee       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date        DateTime       @db.Date
+  hours       Float
+  ratePerHour Float          @map("rate_per_hour")
+  totalPay    Float          @map("total_pay")
+  reason      String         @db.Text
+  status      OvertimeStatus @default(pending)
+  approvedBy  String?        @map("approved_by")
+
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  @@unique([employeeId, date])
+  @@map("overtimes")
+}

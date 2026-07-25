@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F1F5F9; /* Abu-abu sangat muda (adem) */
+  --foreground: #0F172A; /* Text Primary */
+  --card-bg: #FFFFFF; /* Putih (Card/Sidebar background) */
+  --border: #E2E8F0; /* Border */
+  --headline: #0F172A; /* Text Primary */
+  --secondary: #64748B; /* Text Secondary */
+  --button-bg: #1E40AF; /* Primary (Brand) - Navy Blue */
+  --button-bg-hover: #1A3694; /* Navy Blue gelap untuk hover */
+  --button-text: #FFFFFF; /* High contrast text on blue */
+  --accent-action: #0EA5E9; /* Accent (Action) - Sky Blue */
+  --active-text: #1E40AF; /* Active menu highlight text in Light Mode */
+  --accent-coral: #EF4444; /* Bahaya / Alpa */
+  --accent-yellow: #F59E0B; /* Peringatan / Terlambat */
+}
+
+/* Dark mode theme variable overrides */
+.dark {
+  --background: #0F172A; /* Deep Slate Blue */
+  --foreground: #F8FAFC; /* Text Primary */
+  --card-bg: #1E293B; /* Card Background */
+  --border: #334155; /* Border */
+  --headline: #F8FAFC; /* Text Primary */
+  --secondary: #94A3B8; /* Text Secondary */
+  --button-bg: #3B82F6; /* Primary (Brand) - Bright Blue */
+  --button-bg-hover: #2563EB; /* Bright Blue gelap untuk hover */
+  --button-text: #FFFFFF; /* High contrast text on blue button in dark mode */
+  --accent-action: #38BDF8; /* Accent (Action) - Bright Sky Blue */
+  --active-text: #38BDF8; /* Active menu highlight text in Dark Mode */
+  --accent-coral: #EF4444;
+  --accent-yellow: #F59E0B;
+}
+
+@theme {
+  --font-sans: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Override Slate scale for high-contrast premium layout */
+  --color-slate-55: var(--headline);
+  --color-slate-50: var(--headline);
+  --color-slate-100: var(--headline);
+  --color-slate-150: var(--foreground);
+  --color-slate-200: var(--headline);
+  --color-slate-205: var(--headline);
+  --color-slate-250: var(--foreground);
+  --color-slate-300: var(--foreground);
+  --color-slate-350: var(--foreground);
+  --color-slate-400: var(--foreground);
+  --color-slate-405: var(--foreground);
+  --color-slate-450: var(--secondary); /* Secondary text */
+  --color-slate-500: var(--secondary);
+  --color-slate-550: var(--secondary);
+  --color-slate-600: var(--secondary);
+  --color-slate-650: var(--secondary);
+  
+  --color-slate-700: var(--border); /* Borders */
+  --color-slate-755: var(--border);
+  --color-slate-800: var(--border); /* Stroke/Border */
+  --color-slate-805: var(--border);
+  --color-slate-850: var(--border);
+  --color-slate-900: var(--card-bg); /* Card/Sidebar background */
+  --color-slate-950: var(--background); /* Background halaman */
+
+  /* Button/Highlight: Blue/Teal Theme mapping */
+  --color-violet-50: #eff6ff; /* light blue-50 */
+  --color-violet-100: #dbeafe; /* light blue-100 */
+  --color-violet-200: #bfdbfe; /* light blue-200 */
+  --color-violet-300: var(--active-text); /* Text highlight inside active items */
+  --color-violet-400: var(--button-bg);
+  --color-violet-500: var(--button-bg);
+  --color-violet-600: var(--button-bg);
+  --color-violet-605: var(--button-bg);
+  --color-violet-650: var(--button-bg);
+  --color-violet-655: var(--button-bg);
+  --color-violet-700: var(--button-bg-hover);
+
+  /* Indigo scale maps to button-bg */
+  --color-indigo-50: #eff6ff;
+  --color-indigo-100: #dbeafe;
+  --color-indigo-200: #bfdbfe;
+  --color-indigo-300: var(--active-text);
+  --color-indigo-405: var(--button-bg);
+  --color-indigo-500: var(--button-bg);
+  --color-indigo-600: var(--button-bg);
+  --color-indigo-650: var(--button-bg);
+  --color-indigo-700: var(--button-bg-hover);
+
+  /* Secondary: Red for error/delete markers */
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: var(--accent-coral);
+  --color-red-500: var(--accent-coral);
+  --color-red-650: var(--accent-coral);
+  --color-red-800: var(--accent-coral);
+  
+  --color-rose-400: var(--accent-coral);
+  --color-rose-450: var(--accent-coral);
+  --color-rose-500: var(--accent-coral);
+  --color-rose-955: #fee2e2;
+
+  /* Tertiary: Yellow for warnings/pending status */
+  --color-amber-400: var(--accent-yellow);
+  --color-amber-500: var(--accent-yellow);
+  --color-yellow-400: var(--accent-yellow);
+  
+  /* Standard emerald for success states */
+  --color-emerald-500: #10b981;
+  --color-emerald-400: #34d399;
+  --color-emerald-450: #064e3b;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom CSS classes to ensure text contrast inside neon cyan buttons (#00ebc7) */
+button.bg-violet-600, 
+button.bg-violet-500,
+a.bg-violet-600,
+a.bg-violet-500 {
+  color: var(--button-text) !important;
+}
+
+button.bg-violet-600 *, 
+button.bg-violet-500 *,
+a.bg-violet-600 *,
+a.bg-violet-500 * {
+  color: var(--button-text) !important;
+}
+
+/* Premium Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Scrollbar for Sleek Light UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
+
+/* Print styles adjustment */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  .no-print,
+  header,
+  aside,
+  nav {
+    display: none !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 15mm 12mm 12mm 12mm;
+  }
+
+  #payslip-modal-content {
+    display: block !important;
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: white !important;
+    color: black !important;
+    padding-top: 12px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Force grid side-by-side layout on print paper */
+  #payslip-modal-content .grid-cols-1 {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1rem !important;
+  }
+}
