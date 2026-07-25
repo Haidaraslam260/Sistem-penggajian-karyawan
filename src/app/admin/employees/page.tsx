@@ -187,9 +187,8 @@ export default function AdminEmployeesPage() {
     // Pre-check duplicate NIK
     if (nik.trim() && employees.some((emp) => emp.nik.trim().toUpperCase() === nik.trim().toUpperCase() && emp.id !== editingId)) {
       const existing = employees.find((emp) => emp.nik.trim().toUpperCase() === nik.trim().toUpperCase() && emp.id !== editingId);
-      const msg = `NIK "${nik.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}!`;
+      const msg = `NIK "${nik.trim()}" sudah digunakan oleh karyawan ${existing?.name || ''}. NIK harus bersifat unik!`;
       setNikError(msg);
-      setModalError(msg);
       setActionLoading(false);
       return;
     }
@@ -199,7 +198,6 @@ export default function AdminEmployeesPage() {
       const existing = employees.find((emp) => emp.email.trim().toLowerCase() === email.trim().toLowerCase() && emp.id !== editingId);
       const msg = `Email "${email.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}!`;
       setEmailError(msg);
-      setModalError(msg);
       setActionLoading(false);
       return;
     }
@@ -302,16 +300,8 @@ export default function AdminEmployeesPage() {
         </button>
       </div>
 
-      {/* Alerts (Hanya tampil jika modal sedang TIDAK terbuka agar tidak membayang di belakang modal) */}
-      {!isModalOpen && error && (
-        <div className="p-4 text-sm bg-red-950/40 border border-red-800/60 text-red-300 rounded-xl flex items-center gap-2 animate-pulse">
-          <ShieldAlert className="w-4 h-4 text-red-400" />
-          {error}
-        </div>
-      )}
-
       {!isModalOpen && success && (
-        <div className="p-4 text-sm bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 rounded-xl flex items-center gap-2">
+        <div className="p-4 text-sm bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 rounded-xl flex items-center gap-2 animate-fadeIn">
           <span>{success}</span>
         </div>
       )}
