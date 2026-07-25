@@ -302,15 +302,15 @@ export default function AdminEmployeesPage() {
         </button>
       </div>
 
-      {/* Alerts */}
-      {error && (
+      {/* Alerts (Hanya tampil jika modal sedang TIDAK terbuka agar tidak membayang di belakang modal) */}
+      {!isModalOpen && error && (
         <div className="p-4 text-sm bg-red-950/40 border border-red-800/60 text-red-300 rounded-xl flex items-center gap-2 animate-pulse">
           <ShieldAlert className="w-4 h-4 text-red-400" />
           {error}
         </div>
       )}
 
-      {success && (
+      {!isModalOpen && success && (
         <div className="p-4 text-sm bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 rounded-xl flex items-center gap-2">
           <span>{success}</span>
         </div>
@@ -519,9 +519,9 @@ export default function AdminEmployeesPage() {
               
               {/* Error Alert inside Modal */}
               {modalError && (
-                <div className="p-3 bg-red-950/80 border border-red-800 text-red-200 rounded-xl text-xs flex items-center gap-2.5 shadow-lg animate-fadeIn font-semibold">
-                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
-                  <span>{modalError}</span>
+                <div className="p-3.5 bg-rose-900 border-2 border-rose-500 text-white rounded-xl text-xs flex items-center gap-3 shadow-xl animate-fadeIn font-bold">
+                  <AlertCircle className="w-5 h-5 text-rose-200 shrink-0" />
+                  <span className="leading-snug">{modalError}</span>
                 </div>
               )}
 
@@ -580,15 +580,15 @@ export default function AdminEmployeesPage() {
                     placeholder="Contoh: 100002"
                     className={`w-full px-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none font-mono ${
                       nikError
-                        ? 'border-rose-500 ring-2 ring-rose-500/40 bg-rose-950/20 text-rose-200 font-bold'
+                        ? 'border-rose-500 ring-2 ring-rose-500/50 bg-rose-950/60 text-rose-100 font-bold'
                         : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
                     }`}
                   />
                   {nikError && (
-                    <p className="text-[10.5px] font-bold text-rose-400 mt-1 flex items-center gap-1 animate-fadeIn">
-                      <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                    <div className="p-2 bg-rose-900 border border-rose-500 text-rose-100 rounded-lg text-[10.5px] font-bold mt-1.5 flex items-center gap-1.5 shadow-md animate-fadeIn">
+                      <AlertCircle className="w-3.5 h-3.5 text-rose-200 shrink-0" />
                       <span>{nikError}</span>
-                    </p>
+                    </div>
                   )}
                 </div>
 
