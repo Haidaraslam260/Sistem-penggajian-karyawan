@@ -19,6 +19,8 @@ export default function AdminEmployeesPage() {
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState('');
   const [modalError, setModalError] = useState('');
+  const [nikError, setNikError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [success, setSuccess] = useState('');
   const [mounted, setMounted] = useState(false);
 
@@ -82,6 +84,26 @@ export default function AdminEmployeesPage() {
     fetchData();
   }, []);
 
+  const checkNik = (val: string) => {
+    setNik(val);
+    if (val.trim() && employees.some((e) => e.nik.trim().toUpperCase() === val.trim().toUpperCase() && e.id !== editingId)) {
+      const existing = employees.find((e) => e.nik.trim().toUpperCase() === val.trim().toUpperCase() && e.id !== editingId);
+      setNikError(`NIK "${val.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}!`);
+    } else {
+      setNikError('');
+    }
+  };
+
+  const checkEmail = (val: string) => {
+    setEmail(val);
+    if (val.trim() && employees.some((e) => e.email.trim().toLowerCase() === val.trim().toLowerCase() && e.id !== editingId)) {
+      const existing = employees.find((e) => e.email.trim().toLowerCase() === val.trim().toLowerCase() && e.id !== editingId);
+      setEmailError(`Email "${val.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}!`);
+    } else {
+      setEmailError('');
+    }
+  };
+
   // Filter & Pagination Logic
   const departments = Array.from(new Set(employees.map(e => e.position?.department).filter(Boolean)));
 
@@ -114,6 +136,8 @@ export default function AdminEmployeesPage() {
     setStatus('Tetap');
     if (positions.length > 0) setPositionId(positions[0].id);
     setModalError('');
+    setNikError('');
+    setEmailError('');
     setIsModalOpen(true);
   };
 
@@ -132,6 +156,8 @@ export default function AdminEmployeesPage() {
     setStatus(emp.status);
     setPositionId(emp.positionId);
     setModalError('');
+    setNikError('');
+    setEmailError('');
     setIsModalOpen(true);
   };
 
@@ -159,27 +185,21 @@ export default function AdminEmployeesPage() {
     setSuccess('');
 
     // Pre-check duplicate NIK
-    const isNikDuplicate = Boolean(
-      nik.trim() &&
-        employees.some(
-          (emp) => emp.nik.trim().toLowerCase() === nik.trim().toLowerCase() && emp.id !== editingId
-        )
-    );
-    if (isNikDuplicate) {
-      setModalError(`NIK "${nik.trim()}" sudah terdaftar di sistem! Mohon gunakan NIK lain.`);
+    if (nik.trim() && employees.some((emp) => emp.nik.trim().toUpperCase() === nik.trim().toUpperCase() && emp.id !== editingId)) {
+      const existing = employees.find((emp) => emp.nik.trim().toUpperCase() === nik.trim().toUpperCase() && emp.id !== editingId);
+      const msg = `NIK "${nik.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}!`;
+      setNikError(msg);
+      setModalError(msg);
       setActionLoading(false);
       return;
     }
 
     // Pre-check duplicate Email
-    const isEmailDuplicate = Boolean(
-      email.trim() &&
-        employees.some(
-          (emp) => emp.email.trim().toLowerCase() === email.trim().toLowerCase() && emp.id !== editingId
-        )
-    );
-    if (isEmailDuplicate) {
-      setModalError(`Email "${email.trim()}" sudah terdaftar pada karyawan lain!`);
+    if (email.trim() && employees.some((emp) => emp.email.trim().toLowerCase() === email.trim().toLowerCase() && emp.id !== editingId)) {
+      const existing = employees.find((emp) => emp.email.trim().toLowerCase() === email.trim().toLowerCase() && emp.id !== editingId);
+      const msg = `Email "${email.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}!`;
+      setEmailError(msg);
+      setModalError(msg);
       setActionLoading(false);
       return;
     }
@@ -210,7 +230,15 @@ export default function AdminEmployeesPage() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal menyimpan data');
+      if (!res.ok) {
+        if (data.error && data.error.toLowerCase().includes('nik')) {
+          setNikError(data.error);
+        }
+        if (data.error && data.error.toLowerCase().includes('email')) {
+          setEmailError(data.error);
+        }
+        throw new Error(data.error || 'Gagal menyimpan data');
+      }
 
       setSuccess(modalType === 'add' ? 'Karyawan baru berhasil terdaftar!' : 'Data karyawan berhasil diperbarui!');
       setIsModalOpen(false);
@@ -539,92 +567,75 @@ export default function AdminEmployeesPage() {
                 </div>
               </div>
 
-              {/* Real-time duplicate helper variables */}
-              {(() => {
-                const isNikDuplicate = Boolean(
-                  nik.trim() &&
-                    employees.some(
-                      (e) => e.nik.trim().toLowerCase() === nik.trim().toLowerCase() && e.id !== editingId
-                    )
-                );
-                const isEmailDuplicate = Boolean(
-                  email.trim() &&
-                    employees.some(
-                      (e) => e.email.trim().toLowerCase() === email.trim().toLowerCase() && e.id !== editingId
-                    )
-                );
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    Nomor Induk Karyawan (NIK)
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={nik}
+                    onChange={(e) => checkNik(e.target.value)}
+                    placeholder="Contoh: 100002"
+                    className={`w-full px-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none font-mono ${
+                      nikError
+                        ? 'border-rose-500 ring-2 ring-rose-500/40 bg-rose-950/20 text-rose-200 font-bold'
+                        : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
+                    }`}
+                  />
+                  {nikError && (
+                    <p className="text-[10.5px] font-bold text-rose-400 mt-1 flex items-center gap-1 animate-fadeIn">
+                      <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                      <span>{nikError}</span>
+                    </p>
+                  )}
+                </div>
 
-                return (
-                  <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                          Nomor Induk Karyawan (NIK)
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={nik}
-                          onChange={(e) => setNik(e.target.value)}
-                          placeholder="Contoh: 100002"
-                          className={`w-full px-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none font-mono ${
-                            isNikDuplicate
-                              ? 'border-rose-500 ring-1 ring-rose-500/50 text-rose-300'
-                              : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
-                          }`}
-                        />
-                        {isNikDuplicate && (
-                          <p className="text-[10px] text-rose-400 font-semibold mt-1 flex items-center gap-1 animate-fadeIn">
-                            <AlertCircle className="w-3 h-3 text-rose-400 shrink-0" />
-                            <span>NIK "{nik}" sudah terdaftar di sistem!</span>
-                          </p>
-                        )}
-                      </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    Nama Karyawan
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Contoh: Joko Widodo"
+                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                  />
+                </div>
+              </div>
 
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                          Nama Karyawan
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="Contoh: Joko Widodo"
-                          className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                          Email Perusahaan
-                        </label>
-                        <div className="relative">
-                          <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
-                            <Mail className="w-3.5 h-3.5" />
-                          </span>
-                          <input
-                            type="email"
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="joko@perusahaan.com"
-                            className={`w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none ${
-                              isEmailDuplicate
-                                ? 'border-rose-500 ring-1 ring-rose-500/50 text-rose-300'
-                                : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
-                            }`}
-                          />
-                        </div>
-                        {isEmailDuplicate && (
-                          <p className="text-[10px] text-rose-400 font-semibold mt-1 flex items-center gap-1 animate-fadeIn">
-                            <AlertCircle className="w-3 h-3 text-rose-400 shrink-0" />
-                            <span>Email "{email}" sudah terdaftar pada karyawan lain!</span>
-                          </p>
-                        )}
-                      </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    Email Perusahaan
+                  </label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
+                      <Mail className="w-3.5 h-3.5" />
+                    </span>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => checkEmail(e.target.value)}
+                      placeholder="joko@perusahaan.com"
+                      className={`w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none ${
+                        emailError
+                          ? 'border-rose-500 ring-2 ring-rose-500/40 bg-rose-950/20 text-rose-200 font-bold'
+                          : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
+                      }`}
+                    />
+                  </div>
+                  {emailError && (
+                    <p className="text-[10.5px] font-bold text-rose-400 mt-1 flex items-center gap-1 animate-fadeIn">
+                      <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                      <span>{emailError}</span>
+                    </p>
+                  )}
+                </div>
 
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
@@ -640,9 +651,6 @@ export default function AdminEmployeesPage() {
                         />
                       </div>
                     </div>
-                  </>
-                );
-              })()}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
