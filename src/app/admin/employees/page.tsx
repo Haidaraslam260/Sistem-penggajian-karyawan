@@ -555,77 +555,106 @@ export default function AdminEmployeesPage() {
                     </button>
                   )}
                 </div>
-              </div>
+              </div>              {/* Real-time reactive duplicate NIK & Email check */}
+              {(() => {
+                const duplicateNikEmp = nik.trim()
+                  ? employees.find(
+                      (e) => e.nik && e.nik.trim().toUpperCase() === nik.trim().toUpperCase() && e.id !== editingId
+                    )
+                  : null;
+                const duplicateEmailEmp = email.trim()
+                  ? employees.find(
+                      (e) => e.email && e.email.trim().toLowerCase() === email.trim().toLowerCase() && e.id !== editingId
+                    )
+                  : null;
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                    Nomor Induk Karyawan (NIK)
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={nik}
-                    onChange={(e) => checkNik(e.target.value)}
-                    placeholder="Contoh: 100002"
-                    className={`w-full px-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none font-mono ${
-                      nikError
-                        ? 'border-rose-500 ring-2 ring-rose-500/50 bg-rose-950/60 text-rose-100 font-bold'
-                        : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
-                    }`}
-                  />
-                  {nikError && (
-                    <div className="p-2 bg-rose-900 border border-rose-500 text-rose-100 rounded-lg text-[10.5px] font-bold mt-1.5 flex items-center gap-1.5 shadow-md animate-fadeIn">
-                      <AlertCircle className="w-3.5 h-3.5 text-rose-200 shrink-0" />
-                      <span>{nikError}</span>
+                const showNikError = Boolean(duplicateNikEmp || nikError);
+                const nikMessage = duplicateNikEmp
+                  ? `NIK "${nik.trim()}" sudah digunakan oleh karyawan ${duplicateNikEmp.name}. NIK harus bersifat unik!`
+                  : nikError;
+
+                const showEmailError = Boolean(duplicateEmailEmp || emailError);
+                const emailMessage = duplicateEmailEmp
+                  ? `Email "${email.trim()}" sudah terdaftar pada karyawan ${duplicateEmailEmp.name}!`
+                  : emailError;
+
+                return (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Nomor Induk Karyawan (NIK)
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={nik}
+                          onChange={(e) => {
+                            setNik(e.target.value);
+                            setNikError('');
+                          }}
+                          placeholder="Contoh: 100002"
+                          className={`w-full px-2.5 py-1.5 border rounded-lg text-[11px] placeholder:text-[11px] focus:outline-none font-mono transition-all ${
+                            showNikError
+                              ? '!border-rose-500 !bg-rose-950/80 !text-rose-100 font-bold ring-2 ring-rose-500/50'
+                              : 'bg-slate-950 border-slate-800 text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50'
+                          }`}
+                        />
+                        {showNikError && (
+                          <div className="p-2.5 bg-rose-900 border-2 border-rose-500 text-rose-100 rounded-xl text-[11px] font-bold mt-1.5 flex items-center gap-2 shadow-lg animate-fadeIn">
+                            <AlertCircle className="w-4 h-4 text-rose-200 shrink-0" />
+                            <span>{nikMessage}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Nama Karyawan
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Contoh: Joko Widodo"
+                          className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                        />
+                      </div>
                     </div>
-                  )}
-                </div>
 
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                    Nama Karyawan
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Contoh: Joko Widodo"
-                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                    Email Perusahaan
-                  </label>
-                  <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
-                      <Mail className="w-3.5 h-3.5" />
-                    </span>
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => checkEmail(e.target.value)}
-                      placeholder="joko@perusahaan.com"
-                      className={`w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none ${
-                        emailError
-                          ? 'border-rose-500 ring-2 ring-rose-500/40 bg-rose-950/20 text-rose-200 font-bold'
-                          : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
-                      }`}
-                    />
-                  </div>
-                  {emailError && (
-                    <p className="text-[10.5px] font-bold text-rose-400 mt-1 flex items-center gap-1 animate-fadeIn">
-                      <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" />
-                      <span>{emailError}</span>
-                    </p>
-                  )}
-                </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Email Perusahaan
+                        </label>
+                        <div className="relative">
+                          <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
+                            <Mail className="w-3.5 h-3.5" />
+                          </span>
+                          <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                              setEmailError('');
+                            }}
+                            placeholder="joko@perusahaan.com"
+                            className={`w-full pl-8 pr-2.5 py-1.5 border rounded-lg text-[11px] placeholder:text-[11px] focus:outline-none transition-all ${
+                              showEmailError
+                                ? '!border-rose-500 !bg-rose-950/80 !text-rose-100 font-bold ring-2 ring-rose-500/50'
+                                : 'bg-slate-950 border-slate-800 text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50'
+                            }`}
+                          />
+                        </div>
+                        {showEmailError && (
+                          <div className="p-2.5 bg-rose-900 border-2 border-rose-500 text-rose-100 rounded-xl text-[11px] font-bold mt-1.5 flex items-center gap-2 shadow-lg animate-fadeIn">
+                            <AlertCircle className="w-4 h-4 text-rose-200 shrink-0" />
+                            <span>{emailMessage}</span>
+                          </div>
+                        )}
+                      </div>
 
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
@@ -641,6 +670,9 @@ export default function AdminEmployeesPage() {
                         />
                       </div>
                     </div>
+                  </>
+                );
+              })()}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
