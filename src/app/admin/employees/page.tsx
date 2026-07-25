@@ -461,6 +461,14 @@ export default function AdminEmployeesPage() {
             {/* Modal Body / Form */}
             <form onSubmit={handleSave} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar">
               
+              {/* Error Alert inside Modal */}
+              {error && (
+                <div className="p-3 bg-red-950/60 border border-red-800/60 text-red-300 rounded-xl text-xs flex items-center gap-2.5 animate-fadeIn">
+                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+                  <span>{error}</span>
+                </div>
+              )}
+
               {/* Photo Upload and Preview Section */}
               <div className="flex items-center gap-5 p-4 bg-slate-950/40 border border-slate-850 rounded-2xl">
                 <div className="relative shrink-0">
