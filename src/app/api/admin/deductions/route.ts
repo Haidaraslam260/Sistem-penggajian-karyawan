@@ -35,7 +35,7 @@ export async function GET(request: Request) {
       },
     });
 
-    const formatted = employees.map((emp) => ({
+    const formatted = employees.map((emp: any) => ({
       id: emp.id,
       nik: emp.nik,
       name: emp.name,
