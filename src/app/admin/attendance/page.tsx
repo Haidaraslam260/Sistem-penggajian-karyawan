@@ -91,14 +91,14 @@ export default async function AdminAttendancePage() {
               <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
               Clocked In:{' '}
               <strong className="text-slate-200">
-                {employees.filter((emp) => emp.attendances.length > 0).length}
+                {employees.filter((emp: any) => emp.attendances.length > 0).length}
               </strong>
             </span>
             <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
               <AlertCircle className="w-3.5 h-3.5 text-red-500" />
               Belum Absen:{' '}
               <strong className="text-slate-200">
-                {employees.filter((emp) => emp.attendances.length === 0).length}
+                {employees.filter((emp: any) => emp.attendances.length === 0).length}
               </strong>
             </span>
           </div>
@@ -110,20 +110,20 @@ export default async function AdminAttendancePage() {
               Belum ada data karyawan terdaftar di database.
             </div>
           ) : (
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-950/60 text-xs font-semibold uppercase tracking-wider text-slate-400 border-b border-slate-800">
-                <tr>
-                  <th className="px-6 py-4">Karyawan</th>
-                  <th className="px-6 py-4">Jabatan / Divisi</th>
-                  <th className="px-6 py-4">Jam Masuk</th>
-                  <th className="px-6 py-4">Jam Keluar</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4">Titik GPS Masuk</th>
-                  <th className="px-6 py-4">Titik GPS Pulang</th>
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 font-semibold uppercase tracking-wider">
+                  <th className="py-3.5 px-4">NIK</th>
+                  <th className="py-3.5 px-4">Nama Karyawan</th>
+                  <th className="py-3.5 px-4">Jabatan & Divisi</th>
+                  <th className="py-3.5 px-4">Jam Masuk</th>
+                  <th className="py-3.5 px-4">Jam Keluar</th>
+                  <th className="py-3.5 px-4">Status Absensi</th>
+                  <th className="py-3.5 px-4 text-right">Lokasi Presensi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/40">
-                {employees.map((emp) => {
+              <tbody className="divide-y divide-slate-800/60 text-slate-300 font-medium">
+                {employees.map((emp: any) => {
                   const att = emp.attendances[0]; // will be undefined if no attendance today
                   return (
                     <tr key={emp.id} className="hover:bg-slate-900/30 transition duration-150">
