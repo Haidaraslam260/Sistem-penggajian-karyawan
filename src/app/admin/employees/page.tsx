@@ -511,70 +511,110 @@ export default function AdminEmployeesPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                    Nomor Induk Karyawan (NIK)
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={nik}
-                    onChange={(e) => setNik(e.target.value)}
-                    placeholder="Contoh: 100002"
-                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50 font-mono"
-                  />
-                </div>
+              {/* Real-time duplicate helper variables */}
+              {(() => {
+                const isNikDuplicate = Boolean(
+                  nik.trim() &&
+                    employees.some(
+                      (e) => e.nik.trim().toLowerCase() === nik.trim().toLowerCase() && e.id !== editingId
+                    )
+                );
+                const isEmailDuplicate = Boolean(
+                  email.trim() &&
+                    employees.some(
+                      (e) => e.email.trim().toLowerCase() === email.trim().toLowerCase() && e.id !== editingId
+                    )
+                );
 
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                    Nama Karyawan
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Contoh: Joko Widodo"
-                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
-                  />
-                </div>
-              </div>
+                return (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Nomor Induk Karyawan (NIK)
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={nik}
+                          onChange={(e) => setNik(e.target.value)}
+                          placeholder="Contoh: 100002"
+                          className={`w-full px-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none font-mono ${
+                            isNikDuplicate
+                              ? 'border-rose-500 ring-1 ring-rose-500/50 text-rose-300'
+                              : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
+                          }`}
+                        />
+                        {isNikDuplicate && (
+                          <p className="text-[10px] text-rose-400 font-semibold mt-1 flex items-center gap-1 animate-fadeIn">
+                            <AlertCircle className="w-3 h-3 text-rose-400 shrink-0" />
+                            <span>NIK "{nik}" sudah terdaftar di sistem!</span>
+                          </p>
+                        )}
+                      </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                    Email Perusahaan
-                  </label>
-                  <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
-                      <Mail className="w-3.5 h-3.5" />
-                    </span>
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="joko@perusahaan.com"
-                      className="w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
-                    />
-                  </div>
-                </div>
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Nama Karyawan
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Contoh: Joko Widodo"
+                          className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                        />
+                      </div>
+                    </div>
 
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                    Password {modalType === 'edit' && '(Kosongkan jika tidak diubah)'}
-                  </label>
-                  <input
-                    type="password"
-                    required={modalType === 'add'}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
-                  />
-                </div>
-              </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Email Perusahaan
+                        </label>
+                        <div className="relative">
+                          <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-500 pointer-events-none">
+                            <Mail className="w-3.5 h-3.5" />
+                          </span>
+                          <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="joko@perusahaan.com"
+                            className={`w-full pl-8 pr-2.5 py-1.5 bg-slate-950 border rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none ${
+                              isEmailDuplicate
+                                ? 'border-rose-500 ring-1 ring-rose-500/50 text-rose-300'
+                                : 'border-slate-800 focus:ring-2 focus:ring-violet-500/50'
+                            }`}
+                          />
+                        </div>
+                        {isEmailDuplicate && (
+                          <p className="text-[10px] text-rose-400 font-semibold mt-1 flex items-center gap-1 animate-fadeIn">
+                            <AlertCircle className="w-3 h-3 text-rose-400 shrink-0" />
+                            <span>Email "{email}" sudah terdaftar pada karyawan lain!</span>
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                          Password {modalType === 'edit' && '(Kosongkan jika tidak diubah)'}
+                        </label>
+                        <input
+                          type="password"
+                          required={modalType === 'add'}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="••••••••"
+                          className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 text-[11px] placeholder:text-[11px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                        />
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
