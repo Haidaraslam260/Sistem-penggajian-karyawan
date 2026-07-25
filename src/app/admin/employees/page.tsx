@@ -18,6 +18,7 @@ export default function AdminEmployeesPage() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState('');
+  const [modalError, setModalError] = useState('');
   const [success, setSuccess] = useState('');
   const [mounted, setMounted] = useState(false);
 
@@ -28,16 +29,16 @@ export default function AdminEmployeesPage() {
   // Modal States
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'add' | 'edit'>('add');
-  const [editingId, setEditingId] = useState('');
 
-  // Form Fields
+  // Form States
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [nik, setNik] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('employee');
   const [bankAccount, setBankAccount] = useState('');
-  const [photo, setPhoto] = useState<string>('');
+  const [photo, setPhoto] = useState('');
   const [entryDate, setEntryDate] = useState('');
   const [gender, setGender] = useState('Laki-laki');
   const [status, setStatus] = useState('Tetap');
@@ -61,17 +62,17 @@ export default function AdminEmployeesPage() {
       const empData = await empRes.json();
       const posData = await posRes.json();
 
-      if (!empRes.ok) throw new Error(empData.error || 'Gagal memuat karyawan');
-      if (!posRes.ok) throw new Error(posData.error || 'Gagal memuat jabatan');
+      if (!empRes.ok) throw new Error(empData.error || 'Gagal memuat data karyawan');
+      if (!posRes.ok) throw new Error(posData.error || 'Gagal memuat data jabatan');
 
-      setEmployees(empData.employees);
-      setPositions(posData.positions);
+      setEmployees(empData.employees || []);
+      setPositions(posData.positions || []);
 
-      if (posData.positions.length > 0 && !positionId) {
+      if (posData.positions?.length > 0) {
         setPositionId(posData.positions[0].id);
       }
     } catch (err: any) {
-      setError(err.message || 'Gagal mengambil data.');
+      setError(err.message || 'Terjadi kesalahan saat memuat data');
     } finally {
       setLoading(false);
     }
@@ -98,8 +99,9 @@ export default function AdminEmployeesPage() {
   const safeCurrentPage = Math.min(currentPage, totalPages);
   const paginatedEmployees = filteredEmployees.slice((safeCurrentPage - 1) * pageSize, safeCurrentPage * pageSize);
 
-  const openAddModal = () => {
+  const handleAdd = () => {
     setModalType('add');
+    setEditingId(null);
     setNik('');
     setName('');
     setEmail('');
@@ -111,11 +113,11 @@ export default function AdminEmployeesPage() {
     setGender('Laki-laki');
     setStatus('Tetap');
     if (positions.length > 0) setPositionId(positions[0].id);
-    setError('');
+    setModalError('');
     setIsModalOpen(true);
   };
 
-  const openEditModal = (emp: any) => {
+  const handleEdit = (emp: any) => {
     setModalType('edit');
     setEditingId(emp.id);
     setNik(emp.nik);
@@ -129,7 +131,7 @@ export default function AdminEmployeesPage() {
     setGender(emp.gender);
     setStatus(emp.status);
     setPositionId(emp.positionId);
-    setError('');
+    setModalError('');
     setIsModalOpen(true);
   };
 
@@ -138,10 +140,10 @@ export default function AdminEmployeesPage() {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 800000) { // Limit to 800KB to fit easily in Postgres Text/Base64
-        setError('Ukuran foto terlalu besar. Maksimal 800 KB.');
+        setModalError('Ukuran foto terlalu besar. Maksimal 800 KB.');
         return;
       }
-      setError('');
+      setModalError('');
       const reader = new FileReader();
       reader.onloadend = () => {
         setPhoto(reader.result as string);
@@ -153,14 +155,40 @@ export default function AdminEmployeesPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setActionLoading(true);
-    setError('');
+    setModalError('');
     setSuccess('');
+
+    // Pre-check duplicate NIK
+    const isNikDuplicate = Boolean(
+      nik.trim() &&
+        employees.some(
+          (emp) => emp.nik.trim().toLowerCase() === nik.trim().toLowerCase() && emp.id !== editingId
+        )
+    );
+    if (isNikDuplicate) {
+      setModalError(`NIK "${nik.trim()}" sudah terdaftar di sistem! Mohon gunakan NIK lain.`);
+      setActionLoading(false);
+      return;
+    }
+
+    // Pre-check duplicate Email
+    const isEmailDuplicate = Boolean(
+      email.trim() &&
+        employees.some(
+          (emp) => emp.email.trim().toLowerCase() === email.trim().toLowerCase() && emp.id !== editingId
+        )
+    );
+    if (isEmailDuplicate) {
+      setModalError(`Email "${email.trim()}" sudah terdaftar pada karyawan lain!`);
+      setActionLoading(false);
+      return;
+    }
 
     const payload = {
       id: editingId,
-      nik,
-      name,
-      email,
+      nik: nik.trim(),
+      name: name.trim(),
+      email: email.trim(),
       password: password || undefined,
       role,
       bankAccount,
@@ -190,7 +218,7 @@ export default function AdminEmployeesPage() {
 
       setTimeout(() => setSuccess(''), 4000);
     } catch (err: any) {
-      setError(err.message || 'Terjadi kesalahan.');
+      setModalError(err.message || 'Terjadi kesalahan saat menyimpan.');
     } finally {
       setActionLoading(false);
     }
@@ -238,7 +266,7 @@ export default function AdminEmployeesPage() {
         </div>
 
         <button
-          onClick={openAddModal}
+          onClick={handleAdd}
           className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-650 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-violet-600/20 active:scale-[0.98] transition-all duration-200 text-sm"
         >
           <Plus className="w-4.5 h-4.5" />
@@ -363,7 +391,7 @@ export default function AdminEmployeesPage() {
                     </td>
                     <td className="px-6 py-4.5 text-right space-x-2">
                       <button
-                        onClick={() => openEditModal(emp)}
+                        onClick={() => handleEdit(emp)}
                         className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all inline-flex items-center cursor-pointer"
                         title="Edit Karyawan"
                       >
@@ -462,10 +490,10 @@ export default function AdminEmployeesPage() {
             <form onSubmit={handleSave} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar">
               
               {/* Error Alert inside Modal */}
-              {error && (
-                <div className="p-3 bg-red-950/60 border border-red-800/60 text-red-300 rounded-xl text-xs flex items-center gap-2.5 animate-fadeIn">
+              {modalError && (
+                <div className="p-3 bg-red-950/80 border border-red-800 text-red-200 rounded-xl text-xs flex items-center gap-2.5 shadow-lg animate-fadeIn font-semibold">
                   <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
-                  <span>{error}</span>
+                  <span>{modalError}</span>
                 </div>
               )}
 
