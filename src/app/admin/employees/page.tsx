@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Plus, Edit2, Trash2, X, User, Mail, ShieldAlert, Loader2, Calendar, CreditCard, Image as ImageIcon, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, User, Mail, ShieldAlert, Loader2, Calendar, CreditCard, Image as ImageIcon, Search, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 
 const formatLongDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('id-ID', {
