@@ -86,10 +86,10 @@ export default function CheckInPage() {
       if (res.ok && data.attendance) {
         setAttendance(data.attendance);
         if (!(data.attendance.clockIn && data.attendance.clockOut)) {
-          startCamera();
+          await startCamera();
         }
       } else {
-        startCamera();
+        await startCamera();
       }
     } catch (err) {
       console.error(err);
