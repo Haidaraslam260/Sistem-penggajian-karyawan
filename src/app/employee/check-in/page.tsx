@@ -39,6 +39,15 @@ export default function CheckInPage() {
       });
 
       setStream(mediaStream);
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+        try {
+          await videoRef.current.play();
+        } catch (pErr) {
+          console.error('Play err:', pErr);
+        }
+      }
     } catch (err: any) {
       console.error('Camera access error:', err);
       let errorMsg = 'Gagal mengakses kamera. Harap izinkan akses kamera di browser Anda.';
@@ -223,28 +232,48 @@ export default function CheckInPage() {
         </div>
       ) : (
         <div className="bg-slate-900/30 border border-slate-850 rounded-3xl p-6 text-center space-y-6 shadow-xl relative">
-          <div className="relative aspect-[4/3] w-full max-w-sm mx-auto bg-slate-950 rounded-2xl overflow-hidden border border-slate-805 flex items-center justify-center text-slate-500 shadow-inner">
-            {cameraLoading ? (
-              <div className="flex flex-col items-center gap-2"><Loader2 className="w-6 h-6 animate-spin text-violet-500" /><span className="text-xs">Mengaktifkan kamera...</span></div>
-            ) : cameraError ? (
-              <div className="p-4 text-center text-xs text-red-405 space-y-2"><ShieldAlert className="w-8 h-8 mx-auto text-red-500" /><p>{cameraError}</p><button type="button" onClick={startCamera} className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg border border-slate-750 transition cursor-pointer">Coba Lagi</button></div>
-            ) : (
-              <>
-                <video
-                  ref={(el) => {
-                    videoRef.current = el;
-                    if (el && stream && el.srcObject !== stream) {
-                      el.srcObject = stream;
-                      el.play().catch((e) => console.error('Video play ref error:', e));
-                    }
-                  }}
-                  autoPlay
-                  playsInline
-                  muted
-                  className="w-full h-full object-cover scale-x-[-1]"
-                />
-                <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-slate-950/70 border border-slate-800 text-[10px] uppercase font-bold tracking-wider text-emerald-400 flex items-center gap-1.5 animate-pulse"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Kamera Aktif</div>
-              </>
+          <div className="relative aspect-[4/3] w-full max-w-sm mx-auto bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner">
+            <video
+              ref={(el) => {
+                videoRef.current = el;
+                if (el && stream && el.srcObject !== stream) {
+                  el.srcObject = stream;
+                  el.play().catch((e) => console.error('Video play ref error:', e));
+                }
+              }}
+              autoPlay
+              playsInline
+              muted
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              className={`w-full h-full object-cover scale-x-[-1] ${cameraLoading || cameraError ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+            />
+
+            {cameraLoading && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-slate-950 text-slate-400 z-20">
+                <Loader2 className="w-7 h-7 animate-spin text-violet-500" />
+                <span className="text-xs font-semibold">Mengaktifkan kamera...</span>
+              </div>
+            )}
+
+            {cameraError && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-xs text-red-400 space-y-2.5 bg-slate-950 z-20">
+                <ShieldAlert className="w-8 h-8 mx-auto text-red-500" />
+                <p className="leading-relaxed max-w-xs">{cameraError}</p>
+                <button
+                  type="button"
+                  onClick={startCamera}
+                  className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg border border-slate-700 transition cursor-pointer"
+                >
+                  Coba Lagi
+                </button>
+              </div>
+            )}
+
+            {!cameraLoading && !cameraError && (
+              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 border border-slate-800 text-[10px] uppercase font-bold tracking-wider text-emerald-400 flex items-center gap-1.5 animate-pulse backdrop-blur-md z-10">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span>Kamera Aktif</span>
+              </div>
             )}
           </div>
           <div className="flex justify-center">
