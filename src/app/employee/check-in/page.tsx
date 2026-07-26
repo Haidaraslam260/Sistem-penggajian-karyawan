@@ -30,20 +30,37 @@ export default function CheckInPage() {
     setCameraLoading(true);
     setCameraError(null);
     try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 400, height: 300, facingMode: 'user' },
-      });
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('Kamera tidak didukung atau memerlukan koneksi aman (HTTPS).');
       }
+
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+      });
+
       setStream(mediaStream);
     } catch (err: any) {
       console.error('Camera access error:', err);
-      setCameraError('Gagal mengakses kamera. Harap izinkan akses kamera di browser Anda untuk melakukan absensi.');
+      let errorMsg = 'Gagal mengakses kamera. Harap izinkan akses kamera di browser Anda.';
+      if (typeof window !== 'undefined' && window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        errorMsg = 'Akses kamera wajib menggunakan domain ber-HTTPS (SSL). Silakan akses website via https:// atau pasang sertifikat SSL di server deployment Anda.';
+      }
+      setCameraError(errorMsg);
     } finally {
       setCameraLoading(false);
     }
   };
+
+  // Ensure stream is attached to videoRef whenever DOM node mounts or stream changes
+  useEffect(() => {
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+      videoRef.current.onloadedmetadata = () => {
+        videoRef.current?.play().catch((e) => console.error('Video play error:', e));
+      };
+      videoRef.current.play().catch((e) => console.error('Video play fallback error:', e));
+    }
+  }, [stream, loading, cameraLoading]);
 
   const stopCamera = (activeStream: MediaStream | null) => {
     const currentStream = activeStream || stream;
@@ -213,7 +230,19 @@ export default function CheckInPage() {
               <div className="p-4 text-center text-xs text-red-405 space-y-2"><ShieldAlert className="w-8 h-8 mx-auto text-red-500" /><p>{cameraError}</p><button type="button" onClick={startCamera} className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg border border-slate-750 transition cursor-pointer">Coba Lagi</button></div>
             ) : (
               <>
-                <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover scale-x-[-1]" />
+                <video
+                  ref={(el) => {
+                    videoRef.current = el;
+                    if (el && stream && el.srcObject !== stream) {
+                      el.srcObject = stream;
+                      el.play().catch((e) => console.error('Video play ref error:', e));
+                    }
+                  }}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="w-full h-full object-cover scale-x-[-1]"
+                />
                 <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-slate-950/70 border border-slate-800 text-[10px] uppercase font-bold tracking-wider text-emerald-400 flex items-center gap-1.5 animate-pulse"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Kamera Aktif</div>
               </>
             )}

@@ -187,8 +187,9 @@ export default function AdminEmployeesPage() {
     // Pre-check duplicate NIK
     if (nik.trim() && employees.some((emp) => emp.nik.trim().toUpperCase() === nik.trim().toUpperCase() && emp.id !== editingId)) {
       const existing = employees.find((emp) => emp.nik.trim().toUpperCase() === nik.trim().toUpperCase() && emp.id !== editingId);
-      const msg = `NIK "${nik.trim()}" sudah digunakan oleh karyawan ${existing?.name || ''}. NIK harus bersifat unik!`;
+      const msg = `NIK "${nik.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}. NIK harus bersifat unik!`;
       setNikError(msg);
+      setModalError('');
       setActionLoading(false);
       return;
     }
@@ -198,6 +199,7 @@ export default function AdminEmployeesPage() {
       const existing = employees.find((emp) => emp.email.trim().toLowerCase() === email.trim().toLowerCase() && emp.id !== editingId);
       const msg = `Email "${email.trim()}" sudah terdaftar pada karyawan ${existing?.name || ''}!`;
       setEmailError(msg);
+      setModalError('');
       setActionLoading(false);
       return;
     }
@@ -229,13 +231,21 @@ export default function AdminEmployeesPage() {
 
       const data = await res.json();
       if (!res.ok) {
-        if (data.error && data.error.toLowerCase().includes('nik')) {
+        let isFieldErr = false;
+        if (data.error && (data.error.toLowerCase().includes('nik') || data.error.toLowerCase().includes('terdaftar'))) {
           setNikError(data.error);
+          isFieldErr = true;
         }
         if (data.error && data.error.toLowerCase().includes('email')) {
           setEmailError(data.error);
+          isFieldErr = true;
         }
-        throw new Error(data.error || 'Gagal menyimpan data');
+        if (!isFieldErr) {
+          throw new Error(data.error || 'Gagal menyimpan data');
+        } else {
+          setActionLoading(false);
+          return;
+        }
       }
 
       setSuccess(modalType === 'add' ? 'Karyawan baru berhasil terdaftar!' : 'Data karyawan berhasil diperbarui!');
@@ -244,7 +254,18 @@ export default function AdminEmployeesPage() {
 
       setTimeout(() => setSuccess(''), 4000);
     } catch (err: any) {
-      setModalError(err.message || 'Terjadi kesalahan saat menyimpan.');
+      const isNikErr = err.message && (err.message.toLowerCase().includes('nik') || err.message.toLowerCase().includes('terdaftar'));
+      const isEmailErr = err.message && err.message.toLowerCase().includes('email');
+      
+      if (isNikErr) {
+        setNikError(err.message);
+        setModalError('');
+      } else if (isEmailErr) {
+        setEmailError(err.message);
+        setModalError('');
+      } else {
+        setModalError(err.message || 'Terjadi kesalahan saat menyimpan.');
+      }
     } finally {
       setActionLoading(false);
     }
@@ -557,9 +578,16 @@ export default function AdminEmployeesPage() {
                 </div>
               </div>              {/* Real-time reactive duplicate NIK & Email check */}
               {(() => {
-                const duplicateNikEmp = nik.trim()
+                const normNik = (str: string) => str.trim().toUpperCase().replace(/0/g, 'O');
+                const cleanNik = nik.trim();
+
+                const duplicateNikEmp = cleanNik
                   ? employees.find(
-                      (e) => e.nik && e.nik.trim().toUpperCase() === nik.trim().toUpperCase() && e.id !== editingId
+                      (e) =>
+                        e.nik &&
+                        (e.nik.trim().toUpperCase() === cleanNik.toUpperCase() ||
+                         normNik(e.nik) === normNik(cleanNik)) &&
+                        e.id !== editingId
                     )
                   : null;
                 const duplicateEmailEmp = email.trim()
@@ -570,7 +598,7 @@ export default function AdminEmployeesPage() {
 
                 const showNikError = Boolean(duplicateNikEmp || nikError);
                 const nikMessage = duplicateNikEmp
-                  ? `NIK "${nik.trim()}" sudah digunakan oleh karyawan ${duplicateNikEmp.name}. NIK harus bersifat unik!`
+                  ? `NIK "${cleanNik}" sudah terdaftar pada karyawan ${duplicateNikEmp.name}. NIK harus bersifat unik!`
                   : nikError;
 
                 const showEmailError = Boolean(duplicateEmailEmp || emailError);
@@ -585,25 +613,32 @@ export default function AdminEmployeesPage() {
                         <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
                           Nomor Induk Karyawan (NIK)
                         </label>
-                        <input
-                          type="text"
-                          required
-                          value={nik}
-                          onChange={(e) => {
-                            setNik(e.target.value);
-                            setNikError('');
-                          }}
-                          placeholder="Contoh: 100002"
-                          className={`w-full px-2.5 py-1.5 border rounded-lg text-[11px] placeholder:text-[11px] focus:outline-none font-mono transition-all ${
-                            showNikError
-                              ? '!border-rose-500 !bg-rose-950/80 !text-rose-100 font-bold ring-2 ring-rose-500/50'
-                              : 'bg-slate-950 border-slate-800 text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50'
-                          }`}
-                        />
+                        <div className="relative">
+                          <input
+                            type="text"
+                            required
+                            value={nik}
+                            onChange={(e) => {
+                              setNik(e.target.value);
+                              setNikError('');
+                            }}
+                            placeholder="Contoh: 100002"
+                            className={`w-full pl-2.5 ${showNikError ? 'pr-8' : 'pr-2.5'} py-1.5 border rounded-lg text-[11px] placeholder:text-[11px] focus:outline-none font-mono transition-all ${
+                              showNikError
+                                ? '!border-red-500 !bg-red-50 dark:!bg-rose-950/80 !text-red-950 dark:!text-rose-100 font-bold ring-2 ring-red-500/40'
+                                : 'bg-slate-950 border-slate-800 text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50'
+                            }`}
+                          />
+                          {showNikError && (
+                            <span className="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-red-600 dark:text-rose-400">
+                              <AlertCircle className="w-4 h-4 animate-pulse" />
+                            </span>
+                          )}
+                        </div>
                         {showNikError && (
-                          <div className="p-2.5 bg-rose-900 border-2 border-rose-500 text-rose-100 rounded-xl text-[11px] font-bold mt-1.5 flex items-center gap-2 shadow-lg animate-fadeIn">
-                            <AlertCircle className="w-4 h-4 text-rose-200 shrink-0" />
-                            <span>{nikMessage}</span>
+                          <div className="p-3 bg-red-100/90 dark:bg-rose-900/80 border-2 border-red-500/70 text-red-950 dark:text-rose-100 rounded-xl text-[11px] font-bold mt-1.5 flex items-start gap-2 shadow-md animate-fadeIn">
+                            <AlertCircle className="w-4.5 h-4.5 text-red-600 dark:text-rose-300 shrink-0 mt-0.5" />
+                            <span className="leading-snug">{nikMessage}</span>
                           </div>
                         )}
                       </div>
@@ -643,15 +678,15 @@ export default function AdminEmployeesPage() {
                             placeholder="joko@perusahaan.com"
                             className={`w-full pl-8 pr-2.5 py-1.5 border rounded-lg text-[11px] placeholder:text-[11px] focus:outline-none transition-all ${
                               showEmailError
-                                ? '!border-rose-500 !bg-rose-950/80 !text-rose-100 font-bold ring-2 ring-rose-500/50'
+                                ? '!border-red-500 !bg-red-50 dark:!bg-rose-950/80 !text-red-950 dark:!text-rose-100 font-bold ring-2 ring-red-500/40'
                                 : 'bg-slate-950 border-slate-800 text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50'
                             }`}
                           />
                         </div>
                         {showEmailError && (
-                          <div className="p-2.5 bg-rose-900 border-2 border-rose-500 text-rose-100 rounded-xl text-[11px] font-bold mt-1.5 flex items-center gap-2 shadow-lg animate-fadeIn">
-                            <AlertCircle className="w-4 h-4 text-rose-200 shrink-0" />
-                            <span>{emailMessage}</span>
+                          <div className="p-3 bg-red-100/90 dark:bg-rose-900/80 border-2 border-red-500/70 text-red-950 dark:text-rose-100 rounded-xl text-[11px] font-bold mt-1.5 flex items-start gap-2 shadow-md animate-fadeIn">
+                            <AlertCircle className="w-4.5 h-4.5 text-red-600 dark:text-rose-300 shrink-0 mt-0.5" />
+                            <span className="leading-snug">{emailMessage}</span>
                           </div>
                         )}
                       </div>
