@@ -56,10 +56,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Aksi tidak valid' }, { status: 400 });
     }
 
-    // Swafoto (Selfie) Validation
-    if (!photo) {
-      return NextResponse.json({ error: 'Swafoto (selfie) wajah wajib diambil untuk validasi absensi.' }, { status: 400 });
-    }
+    // Photo is now optional (camera feature disabled per user choice, GPS-only attendance)
 
     // Geofencing Validation
     if (latitude === undefined || latitude === null || longitude === undefined || longitude === null) {
