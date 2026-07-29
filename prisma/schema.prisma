@@ -40,7 +40,7 @@ model Position {
 }
 
 model Employee {
-  id            String       @id @default(uuid())
+  id            String       @id @default(uuid()) @map("employee_id")
   nik           String       @unique
   name          String
   email         String       @unique
@@ -69,7 +69,7 @@ model Employee {
 }
 
 model Deduction {
-  id              String   @id @default(uuid())
+  id              String   @id @default(uuid()) @map("deduction_id")
   employeeId      String   @map("employee_id")
   employee        Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   period          String   // "YYYY-MM"
@@ -86,7 +86,7 @@ model Deduction {
 }
 
 model Attendance {
-  id           String           @id @default(uuid())
+  id           String           @id @default(uuid()) @map("attendance_id")
   employeeId   String           @map("employee_id")
   employee     Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   date         DateTime         @db.Date
@@ -108,7 +108,7 @@ model Attendance {
 }
 
 model Payslip {
-  id                  String        @id @default(uuid())
+  id                  String        @id @default(uuid()) @map("payslip_id")
   employeeId          String        @map("employee_id")
   employee            Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   period              String        // Formatted as "YYYY-MM" (e.g. "2026-07")
@@ -148,7 +148,7 @@ enum OvertimeStatus {
 }
 
 model LeaveRequest {
-  id          String      @id @default(uuid())
+  id          String      @id @default(uuid()) @map("leave_request_id")
   employeeId  String      @map("employee_id")
   employee    Employee    @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   type        LeaveType
@@ -166,7 +166,7 @@ model LeaveRequest {
 }
 
 model Overtime {
-  id          String         @id @default(uuid())
+  id          String         @id @default(uuid()) @map("overtime_id")
   employeeId  String         @map("employee_id")
   employee    Employee       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   date        DateTime       @db.Date
