@@ -26,7 +26,7 @@ enum PaymentStatus {
 }
 
 model Position {
-  id                String     @id @default(uuid())
+  id                String     @id @default(uuid()) @map("positions_id")
   name              String     @unique
   department        String
   basicSalary       Float      @map("basic_salary")
