@@ -57,14 +57,14 @@ export default function AdminHeader({ adminName, onMenuClick }: AdminHeaderProps
           >
             <div className="hidden sm:flex flex-col text-right">
               <span className="text-sm font-bold text-slate-100 tracking-wide leading-none group-hover:text-violet-400 transition">{adminName}</span>
-              <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mt-1">Owner / Direktur</span>
+              <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mt-1">Admin</span>
             </div>
 
             <div className="w-10 h-10 rounded-full bg-slate-800 border-2 border-slate-750 group-hover:border-emerald-500 flex items-center justify-center text-emerald-400 font-bold uppercase shadow-sm select-none transition group-hover:scale-105">
               {adminName.charAt(0)}
             </div>
           </button>
-          
+
           <button
             onClick={handleLogout}
             className="p-2 rounded-xl text-slate-450 hover:text-red-400 hover:bg-red-500/10 border border-transparent hover:border-red-950/20 transition cursor-pointer"

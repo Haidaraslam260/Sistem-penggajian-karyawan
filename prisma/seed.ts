@@ -1442,6 +1442,7 @@ async function main() {
   console.log(`Seeding ${rawEmployeesData.length} unique manufacturing employees with PTKP status and BPJS/PPh 21 TER calculations...`);
 
   const currentPeriod = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
+  let generatedPayslipsCount = 0;
 
   for (const emp of rawEmployeesData) {
     const posMeta = createdPositions[emp.pos] || Object.values(createdPositions)[0];
@@ -1478,6 +1479,10 @@ async function main() {
       const totalDeductions = statutory.bpjsKetenagakerjaan + statutory.bpjsKesehatan + statutory.pph21;
       const netSalary = Math.max(0, basicSalary + positionAllowance - totalDeductions);
 
+      // First 5 employees set to pending status for demo testing
+      const isPending = generatedPayslipsCount < 5;
+      generatedPayslipsCount++;
+
       await prisma.payslip.create({
         data: {
           employeeId: createdEmp.id,
@@ -1490,7 +1495,7 @@ async function main() {
           pph21: statutory.pph21,
           totalDeductions,
           netSalary,
-          paymentStatus: 'paid',
+          paymentStatus: isPending ? 'pending' : 'paid',
         },
       });
     }
